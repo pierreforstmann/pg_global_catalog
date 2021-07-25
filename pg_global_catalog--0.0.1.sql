@@ -9,7 +9,6 @@
 -- PROCEDURE pggc_create_fdws
 --
 -- must run as superuser in the database that will host the new schema global_catalog
--- username gcadmin must be created manually
 --
 --
 \t on
