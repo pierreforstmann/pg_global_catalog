@@ -8,7 +8,7 @@
 --
 -- must run as superuser in the database that will host the new schema global_catalog.
 --
--- superuser must create ~/.pgpass to avoir password hard coding in this file.
+-- superuser must create ~/.pgpass to avoid password hard coding in this file.
 --
 --
 \t on
