@@ -26,7 +26,6 @@ declare
 begin
  for l_r in (select datname from pg_database)
  loop
- execute format ('DROP SCHEMA IF EXISTS local_catalog CASCADE');
  execute format ('DROP SERVER IF EXISTS %s CASCADE', l_r.datname);
  end loop;
  --
@@ -39,7 +38,7 @@ begin
   execute format ('CREATE SERVER %s FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host %s, port %s, dbname %s)', l_r.datname, quote_literal('localhost'), quote_literal('5432'), quote_literal(l_r.datname)
                  );
   raise notice 'CREATE USER MAPPING %', l_r.datname;
-  execute format ('CREATE USER MAPPING FOR %s SERVER %s OPTIONS (user %s, password %s)', current_user, l_r.datname, quote_literal('gcadmin'), quote_literal('gcadmin')
+  execute format ('CREATE USER MAPPING FOR %s SERVER %s OPTIONS (user %s, password %s) ', current_user, l_r.datname, quote_literal(current_user), quote_literal('xxx')
                  );
   raise notice 'IMPORT %', l_r.datname;
   execute format ('IMPORT FOREIGN SCHEMA local_catalog FROM SERVER %s INTO global_catalog', l_r.datname);
