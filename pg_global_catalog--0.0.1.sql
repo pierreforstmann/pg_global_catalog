@@ -1,5 +1,5 @@
 --
--- pg_global_catalog-001.sql
+-- pg_global_catalog-0.0.1.sql
 --
 --
 -- Copyright 2021 Fierre Forstmann
@@ -8,7 +8,7 @@
 --
 -- PROCEDURE pggc_create_fdws
 --
--- muist run as superuserin the database that will host the new schema global_catalog
+-- must run as superuser in the database that will host the new schema global_catalog
 -- username gcadmin must be created manually
 --
 --
