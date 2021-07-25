@@ -1,0 +1,5 @@
+# pg_global_catalog postgresql extension
+comment = 'global catalog'
+default_version = '0.0.1'
+module_pathname = '$libdir/pg_global_catalog'
+relocatable = false
