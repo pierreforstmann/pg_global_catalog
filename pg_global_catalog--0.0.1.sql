@@ -8,8 +8,8 @@
 --
 -- PROCEDURE pggc_create_fdws
 --
--- muist run as superuserin the database tghat will host the schema global_catalog
--- username gcadmin must be exist
+-- muist run as superuserin the database that will host the new schema global_catalog
+-- username gcadmin must be created manually
 --
 --
 \t on
