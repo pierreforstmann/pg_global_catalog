@@ -6,9 +6,9 @@
 -- -------------------------------
 --
 --
--- PROCEDURE pggc_create_fdws
+-- must run as superuser in the database that will host the new schema global_catalog.
 --
--- must run as superuser in the database that will host the new schema global_catalog
+-- superuser must create ~/.pgpass to avoir password hard coding in this file.
 --
 --
 \t on
@@ -16,6 +16,7 @@ select '\c ' || current_database();
 \g setup1.sql
 \t off
 --
+-- PROCEDURE pggc_create_fdws
 --
 create or replace procedure pggc_create_fdws()
 language plpgsql
@@ -37,7 +38,7 @@ begin
   execute format ('CREATE SERVER %s FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host %s, port %s, dbname %s)', l_r.datname, quote_literal('localhost'), quote_literal('5432'), quote_literal(l_r.datname)
                  );
   raise notice 'CREATE USER MAPPING %', l_r.datname;
-  execute format ('CREATE USER MAPPING FOR %s SERVER %s OPTIONS (user %s, password %s) ', current_user, l_r.datname, quote_literal(current_user), quote_literal('xxx')
+  execute format ('CREATE USER MAPPING FOR %s SERVER %s OPTIONS (user %s) ', current_user, l_r.datname, quote_literal(current_user)
                  );
   raise notice 'IMPORT %', l_r.datname;
   execute format ('IMPORT FOREIGN SCHEMA local_catalog FROM SERVER %s INTO global_catalog', l_r.datname);
