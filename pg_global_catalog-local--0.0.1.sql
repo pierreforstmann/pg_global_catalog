@@ -9,6 +9,8 @@
 --
 -- must be run in each source database
 --
+\set ON_ERROR_STOP 1
+--
 create or replace procedure pggc_create_views ()
 language plpgsql
 as $$
