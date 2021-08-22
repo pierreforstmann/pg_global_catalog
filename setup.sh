@@ -72,17 +72,47 @@ fi
 # check superuser
 #
 TMP=/tmp/setup.$$.log
-psql -wtc 'select rolname from pg_roles where rolname=current_user and rolsuper' | grep $LOGNAME  > $TMP 2>&1
+psql -Awtc 'select rolname from pg_roles where rolname=current_user and rolsuper' > $TMP 2>&1
 RC1=$?
 check_rc $RC1
 RC2=$?
-if [ $RC2 -ne 0 ]
+if [ $RC2 -eq 0 ]
 then
-  echo "Unix account $LOGNAME is not superuser."
-  exit 1
+  LN=$(wc -l $TMP | cut -f1 -d ' ') 
+  if [ $LN -eq 1 ]
+  then
+    echo "Unix account $LOGNAME is superuser in current instance."
+  else
+    echo "Unix account $LOGNAME is not superuser in current instance."
+    exit 1
+  fi
 else
- echo "Unix account $LOGNAME is superuser in current instance."
+ echo "Error in superuser check."
+ exit 1
 fi
+#
+# check postgres_fdw
+#
+TMP=/tmp/setup.$$.log
+psql -Awtc '\dx postgres_fdw' > $TMP 2>&1
+RC1=$?
+check_rc $RC1
+RC2=$?
+if [ $RC2 -eq 0 ]
+then
+  LN=$(wc -l $TMP | cut -f1 -d ' ') 
+  if [ $LN -eq 1 ]
+  then
+    echo "Extension postgres_fdw found in current instance database $LOGNAME"
+  else
+    echo "Extension postgres_fdw not found in current instance database $LOGNAME"
+    exit 1
+  fi
+else
+ echo "Error in postgres_fdw check."
+ exit 1
+fi
+
 #
 # create schema local_catalog in each database except template0 and template1
 #
