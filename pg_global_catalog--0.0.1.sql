@@ -12,6 +12,7 @@
 --
 --
 \set ON_ERROR_STOP 1
+set client_min_messages=ERROR;
 --
 -- PROCEDURE pggc_create_fdws
 --
