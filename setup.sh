@@ -55,8 +55,10 @@ else
  echo "Password file $HOME/.pgpass found: OK."
 fi
 #
-# check passwordless access
+# check passwordless access:
 #
+# - via Unix-domain socket
+# 
 psql -w -c '\l' >/dev/null 2>&1
 RC1=$?
 check_rc $RC1
@@ -66,8 +68,72 @@ then
  echo "ERROR: cannot connect to PostgreSQL instance without password."
  exit 1
 else 
- echo "Can connect to PostgreSQL instance without password: OK."
+ echo "Can connect locally to PostgreSQL instance without password: OK."
 fi
+#
+# - via TCP/IP
+#
+#
+#  retrieve instance port
+#
+TMP=/tmp/setup.$$.log
+psql -Awtc 'show port' > $TMP 2>&1
+RC1=$?
+check_rc $RC1
+RC2=$?
+if [ $RC2 -eq 0 ]
+then
+  LN=$(wc -l $TMP | cut -f1 -d ' ') 
+  if [ $LN -eq 1 ]
+  then
+   PORT=$(cat $TMP)
+   rm $TMP
+   echo "Instance port number: $PORT"
+  else
+   echo "ERROR: cannot retrieve instance port"
+   exit 1
+  fi
+else 
+ echo "ERROR in port check"
+ exit 1
+fi
+#
+# retrieve first hostname from instance listener_addresses parameter
+#
+TMP=/tmp/setup.$$.log
+psql -Awtc 'show listen_addresses' > $TMP 2>&1
+RC1=$?
+check_rc $RC1
+RC2=$?
+if [ $RC2 -eq 0 ]
+then
+  LN=$(wc -l $TMP | cut -f1 -d ' ')
+  if [ $LN -eq 1 ]
+  then
+   HOST=$(cat $TMP | cut -f1 -d ' ')
+   rm $TMP
+   echo "First host in listen_addresses parameter: $HOST"
+  else
+   echo "ERROR: cannot retrieve instance listen_addresses"
+   exit 1
+  fi
+else
+ echo "ERROR in listen_addresses check"
+ exit 1
+fi
+#
+psql -Awtc '\l+' -h $HOST -p $PORT >/dev/null 2>&1
+RC1=$?
+check_rc $RC1
+RC2=$?
+if [ $RC2 -ne 0 ]
+then
+ echo "ERROR: cannot connect via TCP/IP to PostgreSQL instance without password."
+ exit 1
+else
+ echo "Can connect via TCP/IP to PostgreSQL instance without password: OK."
+fi
+#
 #
 # check superuser
 #
@@ -82,6 +148,7 @@ then
   if [ $LN -eq 1 ]
   then
     echo "Linux account $LOGNAME is superuser in current instance: OK."
+    rm $TMP
   else
     echo "ERROR: Linux account $LOGNAME is not superuser in current instance."
     exit 1
@@ -104,6 +171,7 @@ then
   if [ $LN -eq 1 ]
   then
     echo "Extension postgres_fdw found in current instance database $LOGNAME: OK."
+    rm $TMP
   else
     echo "ERROR: Extension postgres_fdw not found in current instance database $LOGNAME."
     exit 1
