@@ -110,7 +110,7 @@ then
   LN=$(wc -l $TMP | cut -f1 -d ' ')
   if [ $LN -eq 1 ]
   then
-   HOST=$(cat $TMP | cut -f1 -d ' ')
+   HOST=$(cat $TMP | cut -f1 -d ',')
    rm $TMP
    echo "First host in listen_addresses parameter: $HOST"
   else
@@ -122,6 +122,12 @@ else
  exit 1
 fi
 #
+set -f
+if [ $HOST = '*' ]
+then
+ HOST=localhost
+fi
+set +f
 psql -Awtc '\l+' -h $HOST -p $PORT >/dev/null 2>&1
 RC1=$?
 check_rc $RC1

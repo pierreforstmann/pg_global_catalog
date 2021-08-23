@@ -32,6 +32,10 @@ begin
  --
  show port into l_port;
  show listen_addresses into l_listen_addresses;
+ if l_listen_addresses = '*'
+ then
+  l_listen_addresses = 'localhost';
+ end if;
  --
  for l_r in (select datname from pg_database where datname not in ('template0', 'template1'))
  loop
