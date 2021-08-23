@@ -95,7 +95,7 @@ begin
    l_stmt = '';
    for l_db in (select datname from pg_database where datname not in ('template0','template1'))
    loop
-    l_stmt = l_stmt || format('select * from global_catalog.pggc_%s_%s', l_db.datname, l_r.relname);
+    l_stmt = l_stmt || format('select * from global_catalog.%s_%s', l_db.datname, l_r.relname);
     i =  i + 1;
     if ( i <> l_max_db)
     then
@@ -103,7 +103,7 @@ begin
     end if; 
     -- raise notice 'l_stmt=%', l_stmt;
    end loop; 
-   execute format('create or replace view global_catalog.pggc_%s as %s', l_r.relname, l_stmt);
+   execute format('create or replace view global_catalog.%s as %s', l_r.relname, l_stmt);
   end loop;
 end;
 $$;
