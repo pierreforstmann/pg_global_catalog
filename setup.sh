@@ -19,7 +19,7 @@
 # socket and default port number on local host (if this is not the case socket name and
 # port number must be specified with PGHOST and PGPORT environement variables)
 #
-# 2. with TCP/IP to create FDW servers: host name and port number are retrieved
+# 2. via TCP/IP to create FDW servers: host name and port number are retrieved
 # from listen_addresses and port parameters.
 #
 #
@@ -28,17 +28,17 @@
 #
 function check_rc ()
 {
-	if [ $1 = 127 ]
+	if [ $1 -eq 127 ]
 	then
-		echo "Cannot find psql"
+		echo "ERROR: cannot find psql."
 		return 1
-	elif [ $1 = 2 ]
+	elif [ $1 -eq 2 ]
 	then
-		echo "Cannot connect to PostgreSQL"
+		echo "ERROR: cannot connect to PostgreSQL."
 		return 1
-	elif  [ $1 != 0 ]
+	elif  [ $1 -ne 0 ]
 	then
-		echo "Error in SQL statement run by psql"
+		echo "ERROR in SQL statement run by psql."
 		return 1
 	else
 		return 0

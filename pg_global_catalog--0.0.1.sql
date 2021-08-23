@@ -1,5 +1,5 @@
 --
--- pg_global_catalog-0.0.1.sql
+-- pg_global_catalog--0.0.1.sql
 --
 --
 -- Copyright 2021 Fierre Forstmann
@@ -7,8 +7,6 @@
 --
 --
 -- must run as superuser in the database that will host the new schema global_catalog.
---
--- superuser must create ~/.pgpass to avoid password hard coding in this file.
 --
 --
 \set ON_ERROR_STOP 1

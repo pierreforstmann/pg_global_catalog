@@ -43,7 +43,7 @@ begin
                                           'pg_replication_slots')
              )
   loop
-   execute format('create or replace view local_catalog.pggc_%s_%s as select (select oid from pg_database where datname=current_database()) as dbid, t.* from %s t', current_database(), l_r.relname, l_r.relname);
+   execute format('create or replace view local_catalog.%s_%s as select (select oid from pg_database where datname=current_database()) as dbid, t.* from %s t', current_database(), l_r.relname, l_r.relname);
   end loop;
 end;
 $$;
