@@ -5,14 +5,14 @@
 -- Copyright 2021 Fierre Forstmann
 -- -------------------------------
 --
--- PROCEDURE pggc_create_views
+-- FUNCTION pggc_create_views
 --
 -- must be run in each source database
 --
 \set ON_ERROR_STOP 1
 set client_min_messages=ERROR;
 --
-create or replace procedure pggc_create_views ()
+create or replace function pggc_create_views () returns void
 language plpgsql
 as $$
 declare
@@ -92,5 +92,5 @@ begin
 end;
 $$;
 --
-call pggc_create_views();
+select pggc_create_views();
 --

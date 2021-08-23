@@ -12,9 +12,9 @@
 \set ON_ERROR_STOP 1
 set client_min_messages=ERROR;
 --
--- PROCEDURE pggc_create_fdws
+-- FUNCTION pggc_create_fdws
 --
-create or replace procedure pggc_create_fdws()
+create or replace function pggc_create_fdws() returns void
 language plpgsql
 as $$
 declare 
@@ -50,11 +50,11 @@ $$;
 --
 --
 --
-call pggc_create_fdws();
+select pggc_create_fdws();
 --
--- PROCEDURE pggc_create_global_views
+-- FUNCTION pggc_create_global_views
 --
-create or replace procedure pggc_create_global_views()
+create or replace function pggc_create_global_views() returns void
 language plpgsql
 as $$
 declare
@@ -110,5 +110,4 @@ begin
 end;
 $$;
 --
-call pggc_create_global_views();
-
+select pggc_create_global_views();
