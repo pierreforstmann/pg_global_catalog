@@ -49,10 +49,10 @@ function check_rc ()
 #
 if [ ! -f $HOME/.pgpass ]
 then
- echo "Cannot find password file $HOME/.pgpass" 
+ echo "ERROR: cannot find password file $HOME/.pgpass" 
  exit 1
 else
- echo "Password file $HOME/.pgpass found."
+ echo "Password file $HOME/.pgpass found: OK."
 fi
 #
 # check passwordless access
@@ -63,10 +63,10 @@ check_rc $RC1
 RC2=$?
 if [ $RC2 -ne 0 ]
 then
- echo "Cannot connect to PostgreSQL instance without password."
+ echo "ERROR: cannot connect to PostgreSQL instance without password."
  exit 1
 else 
- echo "Can connect to PostgreSQL instance without password."
+ echo "Can connect to PostgreSQL instance without password: OK."
 fi
 #
 # check superuser
@@ -81,13 +81,13 @@ then
   LN=$(wc -l $TMP | cut -f1 -d ' ') 
   if [ $LN -eq 1 ]
   then
-    echo "Unix account $LOGNAME is superuser in current instance."
+    echo "Linux account $LOGNAME is superuser in current instance: OK."
   else
-    echo "Unix account $LOGNAME is not superuser in current instance."
+    echo "ERROR: Linux account $LOGNAME is not superuser in current instance."
     exit 1
   fi
 else
- echo "Error in superuser check."
+ echo "ERROR in superuser check."
  exit 1
 fi
 #
@@ -103,13 +103,13 @@ then
   LN=$(wc -l $TMP | cut -f1 -d ' ') 
   if [ $LN -eq 1 ]
   then
-    echo "Extension postgres_fdw found in current instance database $LOGNAME"
+    echo "Extension postgres_fdw found in current instance database $LOGNAME: OK."
   else
-    echo "Extension postgres_fdw not found in current instance database $LOGNAME"
+    echo "ERROR: Extension postgres_fdw not found in current instance database $LOGNAME."
     exit 1
   fi
 else
- echo "Error in postgres_fdw check."
+ echo "ERROR in postgres_fdw check."
  exit 1
 fi
 
@@ -125,10 +125,10 @@ do
   RC2=$?
   if [ $RC2 -ne 0 ]
   then
-   echo "local_catalog schema creation failed in database $DB."
+   echo "ERROR: local_catalog schema creation failed in database $DB."
    exit 1
   else
-   echo "local_catalog schema created in database $DB."
+   echo "local_catalog schema created in database $DB: OK."
   fi
 done
 #
@@ -141,12 +141,13 @@ check_rc $RC1
 RC2=$?
 if [ $RC2 -ne 0 ]
  then
-  echo "global_catalog schema creation failed."
+  echo "ERROR: global_catalog schema creation failed."
   exit 1
  else
-  echo "global_catalog schema created in database $LOGNAME."
+  echo "global_catalog schema created in database $LOGNAME: OK"
 fi
 #
 echo ""
 echo "pg_global_catalog successfully installed."
+echo ""
 exit 0
