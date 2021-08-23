@@ -17,7 +17,7 @@ Following prerequisites must be met and are checked by `setup.sh`:
 What `setup.sh` is doing: 
 * in `local_catalog`, for most of `pg_catalog` views, a new view is created with an additional column named `dbid`
 * a foreign data wrapper (FDW) server is created for each database 
-* a global view is created for each `pg_catalog` view as the union of all related `local_catalog` views.
+* in `global_catalog` a global view is created for each `pg_catalog` view as the union of all related `local_catalog` views.
 
 # Usage
 
