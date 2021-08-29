@@ -1,4 +1,4 @@
-
+{
    "name": "pg_global_catalog",
    "abstract": "PostgreSQL global catalog",
    "version": "0.0.1",
