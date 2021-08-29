@@ -15,15 +15,15 @@ Following prerequisites must be met and are checked by `setup.sh`:
 * extension `postgres_fdw` must be installed in default database.
 
 What `setup.sh` is doing: 
-* in `local_catalog`, for most of `pg_catalog` views, a new view is created with an additional column named `dbid`
-* a foreign data wrapper (FDW) server is created for each database 
-* in `global_catalog` a global view is created for each `pg_catalog` view as the union of all related `local_catalog` views.
+* in `local_catalog` schema, for most of `pg_catalog` views, a new view is created with an additional column named `dbid`
+* in default database a foreign data wrapper (FDW) server is created for each database (except template0 and template1)
+* in `global_catalog` schema a global view is created for each `pg_catalog` view as the union of all related `local_catalog` views.
 
 # Usage
 
-Most `pg_catalog` views have a view having the same name in `global_catalog` schema and can by used to query catalog data at instance level.
+Most `pg_catalog` views are mapped to the same view in `global_catalog` schema and can by used to query catalog data at instance level.
 
-For example, following query can be used to get number of objects referenced in `pg_class`:
+For example, following query can be used to get number of objects referenced in `pg_class` by database at instance level:
 
 ```
 select
