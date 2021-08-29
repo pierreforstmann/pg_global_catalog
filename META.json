@@ -22,7 +22,7 @@
    "provides": {
      "pg_global_catalog": {
          "abstract": "PostgreSQL global catalog",
-         "file": "pg_global_catalog--0.0.1.sql", "pg_global_catalog-local--0.0.1.sql"
+         "file": "pg_global_catalog--0.0.1.sql", "pg_global_catalog-local--0.0.1.sql",
          "docfile": "README.md",
          "version": "0.0.1"
       }
