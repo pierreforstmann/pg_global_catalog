@@ -1,0 +1,50 @@
+
+   "name": "pg_global_catalog",
+   "abstract": "PostgreSQL global catalog",
+   "version": "0.0.1",
+   "release_status":"testing",
+   "maintainer": [
+      "Pierre Forstmann"
+   ],
+   "license": {
+      "PostgreSQL": "http://www.postgresql.org/about/licence"
+   },
+   "prereqs": {
+      "runtime": {
+         "requires": {
+            "PostgreSQL": "9.5.25"
+         },
+         "recommends": {
+            "PostgreSQL": "9.5.25"
+         }
+      }
+   },
+   "provides": {
+     "pg_global_catalog": {
+         "abstract": "PostgreSQL global catalog",
+         "docfile": "README.md",
+         "version": "0.0.1"
+      }
+   },
+   "resources": {
+      "bugtracker": {
+         "web": "http://github.com/pierreforstmann/pg_global_catalog/issues"
+      },
+      "repository": {
+        "url":  "https://github.com/pierreforstmann/pg_global_catalog.git",
+        "web":  "https://github.com/pierreforstmann/pg_global_catalog",
+        "type": "git"
+      }
+   },
+   "generated_by": "Pierre Forstmann",
+   "meta-spec": {
+      "version": "1.0.0",
+      "url": "http://pgxn.org/meta/spec.txt"
+   },
+   "tags": [
+      "catalog",
+      "dictionary",
+      "global" ,
+      "shared"
+   ]
+}
