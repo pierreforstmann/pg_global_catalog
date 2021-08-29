@@ -1,5 +1,5 @@
 # pg_global_catalog
-PostgreSQL extension to consolidate pg_catalog for each database in a single schema named `global_catalog`.
+PostgreSQL extension to consolidate `pg_catalog` for each database in a single schema named `global_catalog`.
 
 # Installation
 
